@@ -19,7 +19,7 @@ public class RecordAdapter implements RecordPort {
     }
 
     @Override
-    public Record findById(String id) {
+    public Record findById(long id) {
 
         Optional<RecordEntity> recordOptional = recordRepository.findById(id);
 
@@ -40,14 +40,14 @@ public class RecordAdapter implements RecordPort {
     }
 
     @Override
-    public Record update(String id, Record record) {
+    public Record update(long id, Record record) {
 
         Optional<RecordEntity> recordOptional = recordRepository.findById(id);
 
         if (recordOptional.isPresent()) {
             RecordEntity recordEntity = recordOptional.get();
 
-            recordEntity.setName(record.getName());
+            recordEntity.setClinicalRecords(RecordMapper.toEntity(record.getClinicalRecords()));
 
             RecordEntity updatedRecord = recordRepository.save(recordEntity);
             return RecordMapper.toDomain(updatedRecord);
@@ -57,7 +57,7 @@ public class RecordAdapter implements RecordPort {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(long id) {
 
         recordRepository.deleteById(id);
     }

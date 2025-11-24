@@ -14,7 +14,7 @@ public class GetRecord {
         this.recordPort = recordPort;
     }
 
-    public Record getById(String id) throws Exception {
+    public Record getById(long id) throws Exception {
 
         Record record = recordPort.findById(id);
         if (record == null) {

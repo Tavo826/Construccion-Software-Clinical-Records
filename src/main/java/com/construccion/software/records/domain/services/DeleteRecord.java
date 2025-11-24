@@ -13,7 +13,7 @@ public class DeleteRecord {
         this.recordPort = recordPort;
     }
 
-    public void delete(String id) throws Exception {
+    public void delete(long id) throws Exception {
 
         if (recordPort.findById(id) == null) {
             throw new RecordNotFoundException("No existe una orden con id: " + id);

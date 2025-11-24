@@ -4,8 +4,8 @@ import com.construccion.software.records.domain.models.Record;
 
 public interface RecordPort {
 
-    public Record findById(String id);
-    public Record save(Record record);
-    public Record update(String id, Record record);
-    public void delete(String id);
+    Record findById(long id);
+    Record save(Record record);
+    Record update(long id, Record record);
+    void delete(long id);
 }

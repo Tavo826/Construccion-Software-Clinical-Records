@@ -26,7 +26,7 @@ public class RecordUseCase {
         this.deleteRecord = deleteRecord;
     }
 
-    public Record getRecordById(String id) throws Exception {
+    public Record getRecordById(long id) throws Exception {
 
         return getRecord.getById(id);
     }
@@ -36,12 +36,12 @@ public class RecordUseCase {
         return createRecord.create(record);
     }
 
-    public Record updateRecord(String id, Record record) throws Exception {
+    public Record updateRecord(long id, Record record) throws Exception {
 
         return updateRecord.update(id, record);
     }
 
-    public void deleteRecord(String id) throws Exception {
+    public void deleteRecord(long id) throws Exception {
 
         deleteRecord.delete(id);
     }

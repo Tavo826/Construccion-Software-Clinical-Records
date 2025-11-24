@@ -14,7 +14,7 @@ public class UpdateRecord {
         this.recordPort = recordPort;
     }
 
-    public Record update(String id, Record record) throws Exception {
+    public Record update(long id, Record record) throws Exception {
 
          Record updatedRecord = recordPort.update(id, record);
         if (updatedRecord == null) {

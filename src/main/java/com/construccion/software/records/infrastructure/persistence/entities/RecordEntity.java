@@ -3,26 +3,28 @@ package com.construccion.software.records.infrastructure.persistence.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 @Document(collection = "records")
 public class RecordEntity {
 
     @Id
-    private String id;
-    private String name;
+    private long documentId;
+    private Map<String, ClinicalRecordEntity> clinicalRecords;
 
-    public String getId() {
-        return id;
+    public long getDocumentId() {
+        return documentId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDocumentId(long documentId) {
+        this.documentId = documentId;
     }
 
-    public String getName() {
-        return name;
+    public Map<String, ClinicalRecordEntity> getClinicalRecords() {
+        return clinicalRecords;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClinicalRecords(Map<String, ClinicalRecordEntity> clinicalRecords) {
+        this.clinicalRecords = clinicalRecords;
     }
 }

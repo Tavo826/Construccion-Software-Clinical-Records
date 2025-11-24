@@ -10,19 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/records")
 public class RecordController {
 
     private final RecordBuilder recordBuilder;
-    private final RecordValidator recordValidator;
     private final RecordUseCase recordUseCase;
 
-    public RecordController(RecordBuilder recordBuilder, RecordValidator recordValidator, RecordUseCase recordUseCase) {
+    public RecordController(RecordBuilder recordBuilder, RecordUseCase recordUseCase) {
         this.recordBuilder = recordBuilder;
-        this.recordValidator = recordValidator;
         this.recordUseCase = recordUseCase;
     }
 
-    @GetMapping("/Records/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getRecordById(@PathVariable String id) throws Exception {
 
         Record record = recordUseCase.getRecordById(recordBuilder.getId(id));
@@ -31,12 +30,10 @@ public class RecordController {
 
     }
 
-    @PostMapping("/Records")
+    @PostMapping
     public ResponseEntity<?> createRecord(@RequestBody RecordRequest request) throws Exception {
 
-        Record record = recordBuilder.build(
-                request.getName()
-        );
+        Record record = recordBuilder.build(request);
 
         Record createdRecord = recordUseCase.createRecord(record);
 
@@ -44,19 +41,17 @@ public class RecordController {
                 .body(createdRecord);
     }
 
-    @PatchMapping("/Records/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> updateRecord(@PathVariable String id, @RequestBody RecordRequest request) throws Exception {
 
-        Record record = recordBuilder.build(
-                request.getName()
-        );
+        Record record = recordBuilder.build(request);
 
         Record updatedOrder = recordUseCase.updateRecord(recordBuilder.getId(id), record);
 
         return ResponseEntity.ok(updatedOrder);
     }
 
-    @DeleteMapping("Records/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRecord(@PathVariable String id) throws Exception {
 
         recordUseCase.deleteRecord(recordBuilder.getId(id));
