@@ -4,7 +4,7 @@ public class DiagnosticAssistance {
 
     private String orderNumber;
     private String diagnosticAssistanceId;
-    private long quantity;
+    private String quantity;
     private long itemId;
     private boolean requiresSpecialistAssistance;
     private long specialistId;
@@ -25,11 +25,11 @@ public class DiagnosticAssistance {
         this.diagnosticAssistanceId = diagnosticAssistanceId;
     }
 
-    public long getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

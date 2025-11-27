@@ -2,11 +2,13 @@ package com.construccion.software.records.adapter.out;
 
 import com.construccion.software.records.domain.models.Record;
 import com.construccion.software.records.domain.ports.RecordPort;
+import com.construccion.software.records.infrastructure.persistence.entities.ClinicalRecordEntity;
 import com.construccion.software.records.infrastructure.persistence.entities.RecordEntity;
 import com.construccion.software.records.infrastructure.persistence.mapper.RecordMapper;
 import com.construccion.software.records.infrastructure.persistence.repository.RecordRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service

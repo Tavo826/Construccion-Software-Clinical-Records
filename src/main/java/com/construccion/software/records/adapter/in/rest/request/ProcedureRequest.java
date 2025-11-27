@@ -1,6 +1,6 @@
 package com.construccion.software.records.adapter.in.rest.request;
 
-public class Procedurerequest {
+public class ProcedureRequest {
 
     private String orderNumber;
     private String procedureId;

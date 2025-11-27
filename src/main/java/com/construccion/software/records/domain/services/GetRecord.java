@@ -16,11 +16,6 @@ public class GetRecord {
 
     public Record getById(long id) throws Exception {
 
-        Record record = recordPort.findById(id);
-        if (record == null) {
-            throw new RecordNotFoundException("no existe un historial con ese id");
-        }
-
-        return record;
+        return recordPort.findById(id);
     }
 }

@@ -51,8 +51,8 @@ public class RecordValidator extends SimpleValidator {
         return stringValidator("id del procedimiento", value);
     }
 
-    public long quantityValidator(String value) throws Exception {
-        return longValidator("id del item", value);
+    public String quantityValidator(String value) throws Exception {
+        return stringValidator("id del item", value);
     }
 
     public String repetitionNumberValidator(String value) throws Exception {
