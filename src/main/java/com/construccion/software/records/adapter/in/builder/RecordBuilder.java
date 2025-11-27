@@ -1,5 +1,6 @@
 package com.construccion.software.records.adapter.in.builder;
 
+import com.construccion.software.records.adapter.in.rest.request.ClinicalRecordRequest;
 import com.construccion.software.records.adapter.in.rest.request.RecordRequest;
 import com.construccion.software.records.adapter.in.validators.RecordValidator;
 import com.construccion.software.records.domain.models.*;
@@ -22,29 +23,35 @@ public class RecordBuilder {
 
     public Record build(RecordRequest request) throws Exception {
 
-        Map<String, ClinicalRecord> clinicalRecords = new HashMap<>();
-        clinicalRecords.put(
-                recordValidator.dateValidator(request.getDate()).toString(),
-                buildClinicalRecord(request));
-
         Record record = new Record();
         record.setDocumentId(recordValidator.documentValidator(request.getDocumentId()));
-        record.setClinicalRecords(clinicalRecords);
+
+        if (request.getClinicalRecords() != null) {
+            Map<String, ClinicalRecord> clinicalRecords = new HashMap<>();
+            request.getClinicalRecords().forEach((key, value) -> {
+                try {
+                    clinicalRecords.put(key, buildClinicalRecord(value));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            record.setClinicalRecords(clinicalRecords);
+        }
 
         return record;
     }
 
-    private ClinicalRecord buildClinicalRecord(RecordRequest request) throws Exception {
+    private ClinicalRecord buildClinicalRecord(ClinicalRecordRequest request) throws Exception {
 
         List<Medicine> medicineList = new ArrayList<>();
         List<Procedure> procedureList = new ArrayList<>();
         List<DiagnosticAssistance> diagnosticAssistanceList = new ArrayList<>();
 
-        if (!request.getMedicineList().isEmpty()) {
-            for (var medicineRequest: request.getMedicineList()) {
+        if (request.getMedicationList() != null && !request.getMedicationList().isEmpty()) {
+            for (var medicineRequest: request.getMedicationList()) {
                 Medicine medicine = new Medicine();
                 medicine.setOrderNumber(recordValidator.orderNumberValidator(medicineRequest.getOrderNumber()));
-                medicine.setMedicineId(recordValidator.medicineValidator(medicineRequest.getMedicineId()));
+                //medicine.setMedicineId(recordValidator.medicineValidator(medicineRequest.getMedicineId()));
                 medicine.setDose(recordValidator.doseValidator(medicineRequest.getDose()));
                 medicine.setTreatmentDuration(recordValidator.treatmentValidator(medicineRequest.getTreatmentDuration()));
                 medicine.setItemId(recordValidator.itemIdValidator(medicineRequest.getItemId()));
@@ -53,11 +60,11 @@ public class RecordBuilder {
             };
         }
 
-        if (!request.getProcedureList().isEmpty()) {
+        if (request.getProcedureList() != null && !request.getProcedureList().isEmpty()) {
             for (var procedureRequest: request.getProcedureList()) {
                 Procedure procedure = new Procedure();
                 procedure.setOrderNumber(recordValidator.orderNumberValidator(procedureRequest.getOrderNumber()));
-                procedure.setProcedureId(recordValidator.procedureValidator(procedureRequest.getProcedureId()));
+                //procedure.setProcedureId(recordValidator.procedureValidator(procedureRequest.getProcedureId()));
                 procedure.setRepetitionNumber(recordValidator.repetitionNumberValidator(procedureRequest.getRepetitionNumber()));
                 procedure.setRepetitionFrequency(recordValidator.repetitionFrequencyValidator(procedureRequest.getRepetitionFrequency()));
                 procedure.setRequiresSpecialistAssistance(procedureRequest.isRequiresSpecialistAssistance());
@@ -68,11 +75,11 @@ public class RecordBuilder {
             }
         }
 
-        if (!request.getDiagnosticAssistanceList().isEmpty()) {
+        if (request.getDiagnosticAssistanceList() != null && !request.getDiagnosticAssistanceList().isEmpty()) {
             for (var diagnosticAssistanceRequest: request.getDiagnosticAssistanceList()) {
                 DiagnosticAssistance diagnosticAssistance = new DiagnosticAssistance();
                 diagnosticAssistance.setOrderNumber(recordValidator.orderNumberValidator(diagnosticAssistanceRequest.getOrderNumber()));
-                diagnosticAssistance.setDiagnosticAssistanceId(recordValidator.diagnosisAssistanceValidator(diagnosticAssistanceRequest.getDiagnosticAssistanceId()));
+                //diagnosticAssistance.setDiagnosticAssistanceId(recordValidator.diagnosisAssistanceValidator(diagnosticAssistanceRequest.getDiagnosticAssistanceId()));
                 diagnosticAssistance.setQuantity(recordValidator.quantityValidator(diagnosticAssistanceRequest.getQuantity()));
                 diagnosticAssistance.setRequiresSpecialistAssistance(diagnosticAssistanceRequest.isRequiresSpecialistAssistance());
                 diagnosticAssistance.setSpecialistId(recordValidator.documentValidator(diagnosticAssistanceRequest.getSpecialistId()));
